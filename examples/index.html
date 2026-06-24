@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ST Rich Text WYSIWYG Editor - Demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+      body {
+        background-color: #f8f9fa;
+        padding: 2rem;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .demo-section {
+        background-color: white;
+        border-radius: 0.5rem;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+      }
+
+      .demo-section h2 {
+        margin-bottom: 1.5rem;
+        color: #212529;
+        border-bottom: 2px solid #0d6efd;
+        padding-bottom: 0.5rem;
+      }
+
+      .controls {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .controls button {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .output-section {
+        margin-top: 1.5rem;
+      }
+
+      .output-label {
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 0.5rem;
+      }
+
+      .output-box {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 0.375rem;
+        padding: 1rem;
+        font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+        font-size: 0.875rem;
+        max-height: 200px;
+        overflow-y: auto;
+        word-break: break-word;
+      }
+
+      .output-editor {
+        width: 100%;
+        min-height: 140px;
+        max-height: 260px;
+        resize: vertical;
+      }
+
+      .editor-stats {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+        margin-top: 0.5rem;
+        color: #6c757d;
+        font-size: 0.8rem;
+      }
+
+      .footer {
+        text-align: center;
+        color: #6c757d;
+        margin-top: 2rem;
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="demo-section">
+        <h1 class="mb-4">
+          <span style="color: #0d6efd">ST Rich Text WYSIWYG Editor</span> - Bootstrap Compatible
+        </h1>
+        <p class="lead">
+          A lightweight, modular rich text editor built with vanilla JavaScript
+          and Bootstrap 5.
+        </p>
+      </div>
+
+      <div class="demo-section">
+        <h2>Basic Editor</h2>
+        <div id="editor1"></div>
+
+        <div class="controls">
+          <button id="btn-undo" class="btn btn-warning btn-sm">Undo</button>
+          <button id="btn-redo" class="btn btn-warning btn-sm">Redo</button>
+          <button id="btn-clear" class="btn btn-danger btn-sm">Clear</button>
+        </div>
+
+        <div class="output-section">
+          <div class="output-label">HTML Output:</div>
+          <textarea class="output-box output-editor" id="output1"></textarea>
+          <div class="editor-stats" id="stats1"></div>
+        </div>
+      </div>
+
+      <div class="demo-section">
+        <h2>Editor with Initial Data</h2>
+        <div id="editor2"></div>
+
+        <div class="output-section">
+          <div class="output-label">HTML Output:</div>
+          <textarea class="output-box output-editor" id="output2"></textarea>
+          <div class="editor-stats" id="stats2"></div>
+        </div>
+      </div>
+
+      <div class="demo-section">
+        <h2>Features</h2>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">✅ Text Formatting (Bold, Italic, Underline, Strikethrough)</li>
+          <li class="list-group-item">✅ Lists (Ordered and Unordered)</li>
+          <li class="list-group-item">✅ Text Alignment (Left, Center, Right, Justify)</li>
+          <li class="list-group-item">✅ Indentation Control</li>
+          <li class="list-group-item">✅ Blockquotes and Code Blocks</li>
+          <li class="list-group-item">✅ Link Insertion</li>
+          <li class="list-group-item">✅ Undo/Redo Support</li>
+          <li class="list-group-item">✅ Clean, Bootstrap-Compatible UI</li>
+          <li class="list-group-item">✅ Lightweight and Modular Architecture</li>
+          <li class="list-group-item">✅ Plugin-Based Command System</li>
+        </ul>
+      </div>
+
+      <div class="footer">
+        <p>Lightweight • Bootstrap Compatible • Modular • Plugin-Based</p>
+      </div>
+    </div>
+
+    <script>
+      function initEditors() {
+        // Access TinyWYSIWYG from either direct or namespaced UMD export
+        const TinyWYSIWYG = window.TinyWYSIWYG?.TinyWYSIWYG || window.TinyWYSIWYG;
+        
+        if (typeof TinyWYSIWYG !== 'function') {
+          console.log('TinyWYSIWYG not loaded, retrying in 500ms');
+          setTimeout(initEditors, 500);
+          return;
+        }
+
+        console.log('TinyWYSIWYG loaded successfully', TinyWYSIWYG);
+
+        // Initialize first editor
+        const editor1 = new TinyWYSIWYG('#editor1', {
+          initialData:
+            '<h2>Building Better Editing Experiences</h2>' +
+            '<p>Modern web applications demand rich text editing that feels <strong>native</strong> and intuitive.</p>' +
+            '<p>Use this demo to format content, insert links, images, and tables with a compact toolbar.</p>' +
+            '<table><tbody>' +
+            '<tr><th>Performance</th><td>Fast startup and lightweight output</td></tr>' +
+            '<tr><th>Flexibility</th><td>Plugin-based command system</td></tr>' +
+            '<tr><th>Output</th><td>Clean semantic HTML</td></tr>' +
+            '</tbody></table>' +
+            '<blockquote>The best editing tools get out of your way.</blockquote>' +
+            '<p>Try editing this text now.</p>',
+        });
+
+        // Initialize second editor with initial content
+        const editor2 = new TinyWYSIWYG('#editor2', {
+          initialData: '<p>This editor comes with <strong>pre-loaded content</strong>. You can edit it freely!</p>',
+        });
+
+        const output1 = document.getElementById('output1');
+        const output2 = document.getElementById('output2');
+        const stats1 = document.getElementById('stats1');
+        const stats2 = document.getElementById('stats2');
+        let syncingFromEditor = false;
+        let syncingFromOutput = false;
+
+        const getStats = (html) => {
+          const parser = document.createElement('div');
+          parser.innerHTML = html;
+          const text = (parser.innerText || '').replace(/\s+/g, ' ').trim();
+          const words = text ? text.split(' ').length : 0;
+          const chars = text.length;
+          return { words, chars };
+        };
+
+        const updateStats = (editor, statsEl) => {
+          const { words, chars } = getStats(editor.getData());
+          statsEl.textContent = `Words: ${words} | Characters: ${chars}`;
+        };
+
+        const syncOutputFromEditor = (editor, output) => {
+          if (syncingFromOutput) {
+            return;
+          }
+          syncingFromEditor = true;
+          output.value = editor.getData();
+          syncingFromEditor = false;
+        };
+
+        const syncEditorFromOutput = (editor, output) => {
+          if (syncingFromEditor) {
+            return;
+          }
+          syncingFromOutput = true;
+          editor.setData(output.value);
+          syncingFromOutput = false;
+        };
+
+        const updateOutput1 = () => {
+          syncOutputFromEditor(editor1, output1);
+          updateStats(editor1, stats1);
+        };
+
+        document.getElementById('btn-undo').addEventListener('click', () => {
+          editor1.getEditor().undo();
+          updateOutput1();
+        });
+
+        document.getElementById('btn-redo').addEventListener('click', () => {
+          editor1.getEditor().redo();
+          updateOutput1();
+        });
+
+        document.getElementById('btn-clear').addEventListener('click', () => {
+          editor1.setData('');
+          updateOutput1();
+        });
+
+        // Listen to changes on both editors
+        editor1.getEditor().getEditableArea().addEventListener('input', updateOutput1);
+        editor2.getEditor().getEditableArea().addEventListener('input', () => {
+          syncOutputFromEditor(editor2, output2);
+          updateStats(editor2, stats2);
+        });
+
+        output1.addEventListener('input', () => {
+          syncEditorFromOutput(editor1, output1);
+          updateStats(editor1, stats1);
+        });
+
+        output2.addEventListener('input', () => {
+          syncEditorFromOutput(editor2, output2);
+          updateStats(editor2, stats2);
+        });
+
+        // Initial output display
+        updateOutput1();
+        syncOutputFromEditor(editor2, output2);
+        updateStats(editor2, stats2);
+      }
+
+      document.addEventListener('DOMContentLoaded', initEditors);
+    </script>
+  </body>
+</html>

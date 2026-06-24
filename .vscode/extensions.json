@@ -1,0 +1,6 @@
+{
+  "name": "vscode",
+  "recommendations": [
+    "ms-ceintl.vscode-language-pack-de"
+  ]
+}

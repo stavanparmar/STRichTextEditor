@@ -1,0 +1,42 @@
+{
+  "name": "st-rich-text-editor",
+  "version": "1.0.0",
+  "description": "A lightweight, bootstrap-compatible WYSIWYG rich text editor",
+  "main": "dist/editor.js",
+  "types": "dist/editor.d.ts",
+  "scripts": {
+    "dev": "webpack serve --mode development --open",
+    "build": "webpack --mode production",
+    "watch": "webpack --mode development --watch",
+    "lint": "eslint src --ext .ts",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "wysiwyg",
+    "editor",
+    "rich-text",
+    "bootstrap",
+    "lightweight"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "css-loader": "^6.8.1",
+    "eslint": "^9.0.0",
+    "html-webpack-plugin": "^5.5.3",
+    "is-core-module": "^2.13.0",
+    "mini-css-extract-plugin": "^2.7.6",
+    "style-loader": "^3.3.3",
+    "ts-loader": "^9.4.4",
+    "typescript": "^5.0.0",
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.0"
+  }
+}

@@ -56,63 +56,12 @@ export class Editor {
       this.model.setContent(this.editableArea.innerHTML);
     });
 
-    this.editableArea.addEventListener('keydown', (e) => {
-      this.handleKeyboardShortcuts(e);
-    });
-
     this.editableArea.addEventListener('paste', (e) => {
       e.preventDefault();
       const text = e.clipboardData?.getData('text/html') || 
                    e.clipboardData?.getData('text/plain') || '';
       this.executeCommand('insertHTML', text);
     });
-  }
-
-  private handleKeyboardShortcuts(e: KeyboardEvent): void {
-    const isPrimaryKey = e.ctrlKey || e.metaKey;
-    if (!isPrimaryKey) {
-      return;
-    }
-
-    const key = e.key.toLowerCase();
-
-    if (key === 'b') {
-      e.preventDefault();
-      this.executeCommand('bold');
-      return;
-    }
-
-    if (key === 'i') {
-      e.preventDefault();
-      this.executeCommand('italic');
-      return;
-    }
-
-    if (key === 'u') {
-      e.preventDefault();
-      this.executeCommand('underline');
-      return;
-    }
-
-    if (key === 'k') {
-      e.preventDefault();
-      const url = prompt('Enter URL:');
-      if (url) {
-        this.executeCommand('insertLink', url);
-      }
-      return;
-    }
-
-    if (key === 'z' && !e.shiftKey) {
-      e.preventDefault();
-      this.undo();
-      return;
-    }
-
-    if ((key === 'z' && e.shiftKey) || key === 'y') {
-      e.preventDefault();
-      this.redo();
-    }
   }
 
   registerPlugin(plugin: PluginInterface): void {

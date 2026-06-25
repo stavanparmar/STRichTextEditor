@@ -10,17 +10,17 @@ module.exports = (env, argv) => {
     output: {
       filename: 'editor.js',
       path: path.resolve(__dirname, 'dist'),
-      library: 'TinyWYSIWYG',
-      libraryTarget: 'umd',
-      libraryExport: 'TinyWYSIWYG',
-      umdNamedDefine: true,
-      globalObject: 'this',
+      library: {
+        name: 'TinyWYSIWYG',
+        type: 'umd',
+        umdNamedDefine: true,
+        export: 'default',
+      },
     },
     devtool: isProduction ? false : 'source-map',
     devServer: {
-      port: 8081,
-      hot: false,
-      liveReload: true,
+      port: 8080,
+      hot: true,
       static: {
         directory: path.join(__dirname, 'examples'),
       },

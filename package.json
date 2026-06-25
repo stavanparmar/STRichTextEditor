@@ -1,5 +1,5 @@
 {
-  "name": "st-rich-text-editor",
+  "name": "tiny-wysiwyg-editor",
   "version": "1.0.0",
   "description": "A lightweight, bootstrap-compatible WYSIWYG rich text editor",
   "main": "dist/editor.js",
